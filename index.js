@@ -1,18 +1,21 @@
 const express = require('express');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-
+// In-memory user storage
 let users = [
   { id: 1, name: 'Alice', email: 'alice@example.com' },
   { id: 2, name: 'Bob', email: 'bob@example.com' }
 ];
 let nextId = 3;
-app.get('/' , (req , res)=>{
-  res.send("server is running")
-})
+
+// Root endpoint
+app.get('/', (req, res) => {
+  res.send('Server is running');
+});
+
 // GET /users - List all users
 app.get('/users', (req, res) => {
   res.json(users);
@@ -45,6 +48,5 @@ app.delete('/users/:id', (req, res) => {
   res.json({ message: 'User deleted' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-}); 
+// Export the Express API
+module.exports = app; 
